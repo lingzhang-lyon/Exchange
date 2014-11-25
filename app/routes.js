@@ -2,6 +2,7 @@
 
 var User = require('../app/models/user');
 var Movie = require('../app/models/movie');
+var Post = require('../app/models/post');
 
 GLOBAL.count=0;
 
@@ -11,29 +12,6 @@ module.exports = function (app, passport) {
 //****************************************************************
 // Member Management
 //****************************************************************
-    //change Membership -- Simple User: 1 year validation, Premium User: 1 month validation
-    app.get('/changeMembership/:id/:type', isLoggedIn, function (req, res) {
-
-        var memberDay = new Date();
-        
-        if(req.params.type == "Simple"){
-        	memberDay.setDate(memberDay.getDate()+31);
-        	User.update({"local.email": req.params.id},{"local.userType": "Premium", "local.createDate":new Date(),
-                "local.expireDate":memberDay}).exec();
-
-        }else{
-        	memberDay.setDate(memberDay.getDate()+365);
-        	User.update({"local.email": req.params.id},{"local.userType": "Simple", "local.createDate":new Date(),
-                "local.expireDate":memberDay}).exec();
-        	
-        }
-        
-        var pathName = pathName = '/profile/'+ req.params.id;
-        res.redirect(pathName);
-    });
-
-
-
     //add new member
     app.get('/addMember', isLoggedIn, function (req, res) {
         res.render('addmember.ejs'); // load the index.ejs file
@@ -45,16 +23,12 @@ module.exports = function (app, passport) {
         newUser.local.firstName  = req.param('firstName');
         newUser.local.lastName   = req.param('lastName');
         newUser.local.phone      = req.param('phone');
+        newUser.local.zip        = req.param('zip');
         newUser.local.address    = req.param('address');
         newUser.local.password   = newUser.generateHash(req.param('password'));
         newUser.local.createDate = new Date();
-        newUser.local.userType   = req.param('userType');
-        newUser.local.expireDate = new Date();
-        if(req.param('userType') == "Simple"){
-            newUser.local.expireDate.setDate(newUser.local.expireDate.getDate()+365);
-        }else{
-            newUser.local.expireDate.setDate(newUser.local.expireDate.getDate()+31);
-        }
+        newUser.local.skills     = req.param('skills');
+        newUser.local.items      = req.param('items');
 
         newUser.save();
         var pathName = '/profile/'+ req.param('email');

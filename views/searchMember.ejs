@@ -15,7 +15,9 @@
                     <option value="lastName">Last Name</option>
                     <option value="phone">Phone Number</option>
                     <option value="address">Address</option>
-                    <option value="userType">Membership</option>
+                    <option value="zip">Zip</option>
+                    <option value="skills">Skills</option>
+                    <option value="items">Items</option>
   		</select>
   		<div class="form-group">
    			<label class="sr-only">Search String</label>
@@ -49,12 +51,16 @@
                 		<td> <%= user.local.address %></td>
             		</tr>
             		<tr>
-                		<th style="width: 150px;">Membership: </th>
-                		<td> <%= user.local.userType %></td>
+                		<th style="width: 150px;">Zip: </th>
+                		<td> <%= user.local.zip %></td>
             		</tr>
             		<tr>
-                		<th style="width: 150px;">Expire Date: </th>
-                		<td> <%= user.local.expireDate %></td>
+                		<th style="width: 150px;">Skills: </th>
+                		<td> <%= user.local.skills %></td>
+            		</tr>
+            		<tr>
+                		<th style="width: 150px;">Items: </th>
+                		<td> <%= user.local.items %></td>
             		</tr>
             	</tbody>
             </table>
