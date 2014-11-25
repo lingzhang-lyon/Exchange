@@ -46,6 +46,15 @@ module.exports = function (app, passport) {
         });
     });
     
+  //member view profile
+    app.get('/postcenter', isLoggedIn, function (req, res) {
+        User.findOne({user_id: req.user.id}, function(err, user) {
+            res.render('postcenter.ejs', {
+                user : req.user
+            });
+        });
+    });
+    
     //view individual profile
     app.get('/profile/:id', isLoggedIn, function (req, res) {
          User.findOne({"local.email": req.params.id}, function (err, user) {
