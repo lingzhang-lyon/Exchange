@@ -77,7 +77,7 @@ module.exports = function (app, passport) {
     //delete individual member
     app.get('/destroy/:id', isLoggedIn, function (req, res) {
         User.remove({"local.email": req.params.id}).exec();
-        res.redirect('/adminstore');
+        res.redirect('/adminconsole');
     });
     
     
@@ -325,8 +325,8 @@ module.exports = function (app, passport) {
     });
 
     //direct to admin page
-    app.get('/adminstore', isLoggedIn, function (req, res) {
-        res.render('adminstore.ejs'); // load the index.ejs file
+    app.get('/adminconsole', isLoggedIn, function (req, res) {
+        res.render('adminconsole.ejs'); // load the index.ejs file
     });
 
     // =====================================
@@ -359,7 +359,7 @@ module.exports = function (app, passport) {
 
     app.post('/adminlogin', passport.authenticate('local-login',{
 
-        successRedirect: '/adminstore', // redirect to the secure profile section
+        successRedirect: '/adminconsole', // redirect to the secure profile section
         failureRedirect: '/adminlogin', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
 
