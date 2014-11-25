@@ -190,8 +190,46 @@ module.exports = function (app, passport) {
        Movie.remove({_id: req.params.id}).exec();
         res.redirect('/searchMovie');
     });
+    
  //***************************************************************
+    // search post for members
+    app.get('/searchPostForMember', isLoggedIn, function (req, res) {
+    	var twisted = function(res){
+            return function(err, posts){
+                if (err){
+                    console.log('error occured');
+                    return;
+                }
+                res.render('searchPostForMember.ejs', {posts: posts});
+            }
+        }
+        Post.find({}, twisted(res)).limit(100);  
+    });
+    
+    app.post('/searchPostForMember', isLoggedIn, function (req, res) {	
+    	var twisted = function(res){
+            return function(err, posts){
+                if (err){
+                    console.log('error occured');
+                    return;
+                }
+                res.render('searchPostForMember.ejs', {posts: posts});
+            }
+        }
+    	var name = req.param('searchparam');
+    	var value = {'$regex': req.param('str'),$options: 'i'};
+    	if (req.param('searchparam')=="poster" || req.param('searchparam')=="title" || req.param('searchparam')=="createDate" || req.param('searchparam')=="actionType" || req.param('searchparam')=="categoryFlag" || req.param('searchparam')=="categoryType")
+    		{
+    			value=req.param('str');
+    		}
+    	var query = {};
+    	query[name] = value;
+    	console.log(query);
+    	Post.find(query, twisted(res));  	
+    });
+    
     //search movie for members
+    /*
     app.post('/searchMovieForMembers', isLoggedIn, function (req, res) {	
     	var twisted = function(res){
             return function(err, movies){
@@ -224,7 +262,7 @@ module.exports = function (app, passport) {
         }
         Movie.find({}, twisted(res)).limit(100);  
     });
-    
+    */
     
  //***************************************************************   
     //view movie for members

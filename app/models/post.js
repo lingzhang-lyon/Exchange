@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 
 // define the schema for our post model
 var postSchema = mongoose.Schema({
+	postid			: String,
 	poster			: String,
 	title			: String,
 	createDate		: Date,
@@ -12,7 +13,7 @@ var postSchema = mongoose.Schema({
 	categoryFlag	: String, //goods & services  
 	categoryId		: String, //food, house, sports¡­.???
 	content			: String,
-	replyPosts		: [String]
+	replyPostId		: String
 });
 
 module.exports = mongoose.model('Post', postSchema);
