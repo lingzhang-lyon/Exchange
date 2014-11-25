@@ -25,9 +25,7 @@ var userSchema = mongoose.Schema({
         lastName     : String,
         phone        : String,
         zip			 : String,
-        address      : String,
-        skills		 : [],
-        items		 : []
+        address      : String
     }
 
 });

@@ -70,8 +70,6 @@ module.exports = function(passport) {
                 newUser.local.createDate = new Date();
                 newUser.local.firstName  = req.param('fname');
                 newUser.local.lastName   = req.param('lname');
-                newUser.local.skills     = req.param('skills');
-                newUser.local.items      = req.param('items');
 
 
 				// save the user
