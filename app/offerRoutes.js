@@ -1,19 +1,60 @@
 /**
  * New node file
  */
-var OfferSchema= require('../app/models/offer');
-var OfferHistorySchema= require('../app/models/offerHistory');
-var CommentSchema= require('../app/models/comment');
+var Offer= require('../app/models/offer');
+var OfferHistory= require('../app/models/offerHistory');
+var Comment= require('../app/models/comment');
+
+
+//for test
+exports.testSaveOffer = function(req, res){
+		
+	var newOffer=new Offer();
+	newOffer.offerId="1";
+	newOffer.buyingQty=100;
+	
+	newOffer.save(function(err){
+		if(err){
+			res.status(500).json({status:'failure'});
+			console.log("failure to save");
+		}
+		else{
+			res.send('saveResult', {
+				status: "success"
+			});
+		}
+	});
+	
+	
+};
+
+
+//for test
+exports.testGetAllOffer = function(req, res){
+	Offer.find()
+	.exec(function(err,result){
+		if(err){
+			res.status(500).json({status:'failure'});
+		}
+		else{
+			res.send('allOfferDetails', {
+				allOfferDetails: result
+			});
+		}
+	});
+	
+};
+
+
+
+
 
 exports.getOfferDetail = function(req, res){
 	var offerId = req.param('offerId');
-	var offer;
-	var lastEvent;
-	var comments;
 	
 	var testOffer={
 			offerId : "offer.offerId",
-			buyingQty : "offer.byingQty",
+			buyingQty : "offer.buyingQty",
 			offeredDetails : "offer.offeredDetails",
 			buyerStatus : "offer.buyerStatus",
 			sellerStatus : "offer.sellerStatus",
@@ -23,59 +64,32 @@ exports.getOfferDetail = function(req, res){
 			lastModified : "offer.lastModified"	
 	};
 	var testLastEvent="added one more item";
-	var testComments=[
-	    {
+	var testComment={
 	    	commentId : 1,
 	    	commentDesc : "String",
 	    	lastUpdated : new Date(),
 	    	offerId : 1,
 	    	userId : 1
-		}
-	];		
+		};	
 	
-	
-
-	
-	OfferHistorySchema.find()
-	.setOptions({"offerId": offerId,
-		sort: 'lastModified'
-		//TODO add more options:  sort descendant, limit 1	
-	})
-	.exec(function(err,result){
+	Offer.findOne({"offerId": offerId}, function(err,result){
 		if(err){
-			//res.status(500).json({status:'could not find offer history'});
+			res.status(500).json({status:'failure'});
+		}
+		else if(result===null){
+			res.send("could not find offer with this offerId");
 		}
 		else{
-			//lastEvent=result;
-			lastEvent=testLastEvent;
-		}
-	});
-	
-	CommentSchema.find()
-	.setOptions({"offerId": offerId})
-	.exec(function(err,result){
-		if(err){
-			//res.status(500).json({status:'could not find offer comment'});
-		}
-		else{
-			//comments=result;
-			comments=testComments;
 			
-		}
-	});
-	
-	OfferSchema.find()
-	.setOptions({"offerId": offerId})
-	.exec(function(err,result){
-		if(err){
-			res.status(500).json({status:'could not find offer'});
-		}
-		else{
-			//offer=result;
-			offer=testOffer;
+			var offer=result;
+			//var offer=testOffer;
+			var lastEvent=testLastEvent;
+			var comments=[];
+			comments.push(testComment);
 			res.send('offerDetails', {
+				offerIdInURL: offerId,
 				offerId : offer.offerId,
-				buyingQty : offer.byingQty,
+				buyingQty : offer.buyingQty,
 				offeredDetails : offer.offeredDetails,
 				buyerStatus : offer.buyerStatus,
 				sellerStatus : offer.sellerStatus,
@@ -85,12 +99,11 @@ exports.getOfferDetail = function(req, res){
 				lastModified : offer.lastModified,
 				comments: comments,
 				lastEvent: lastEvent,
-			});			
+
+			});
+			
 		}
 	});
-	
-	
-	
 	
 };
 

@@ -11,8 +11,10 @@ module.exports = function (app, passport) {
 //****************************************************************
 // Offer Management
 //****************************************************************	
-	var Offer = require('../app/offerRoutes');
-	app.get('/category/:categoryId/product/:productId/offer/:offerId', Offer.getOfferDetail);
+	var OfferRoutes = require('../app/offerRoutes');
+	app.get('/category/:categoryId/product/:productId/offer/testSaveOffer', OfferRoutes.testSaveOffer);
+	app.get('/category/:categoryId/product/:productId/offer/testGetAllOffer',  OfferRoutes.testGetAllOffer);
+	app.get('/category/:categoryId/product/:productId/offer/:offerId', OfferRoutes.getOfferDetail);
 	//app.put('/category/:categoryId/product/:productId/offer/:offerId', isLoggedIn, Offer.updateOffer);
 	//app.delete('/category/:categoryId/product/:productId/offer/:offerId', isLoggedIn, Offer.delete);
 	//app.get('/category/:categoryId/product/:productId/offer/:offerId/history', isLoggedIn, Offer.getOfferHistory);
