@@ -8,6 +8,16 @@ GLOBAL.count=0;
 
 module.exports = function (app, passport) {
 
+//****************************************************************
+// Offer Management
+//****************************************************************	
+	var Offer = require('../app/offerRoutes');
+	app.get('/category/:categoryId/product/:productId/offer/:offerId', Offer.getOfferDetail);
+	//app.put('/category/:categoryId/product/:productId/offer/:offerId', isLoggedIn, Offer.updateOffer);
+	//app.delete('/category/:categoryId/product/:productId/offer/:offerId', isLoggedIn, Offer.delete);
+	//app.get('/category/:categoryId/product/:productId/offer/:offerId/history', isLoggedIn, Offer.getOfferHistory);
+	//app.get('/category/:categoryId/product/:productId/offer/:offerId/comment', isLoggedIn, Offer.addOfferComment);	
+	
 
 //****************************************************************
 // Member Management
