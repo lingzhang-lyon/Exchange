@@ -16,7 +16,7 @@ module.exports = function (app, passport) {
  	app.get('/category/:categoryId/product/:productId/offer/testGetAllOffer',  OfferRoutes.testGetAllOffer);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId', OfferRoutes.getOfferDetail);
 	app.put('/category/:categoryId/product/:productId/offer/:offerId', OfferRoutes.updateOffer);
-	//app.delete('/category/:categoryId/product/:productId/offer/:offerId', isLoggedIn, Offer.delete);
+	app.del('/category/:categoryId/product/:productId/offer/:offerId', OfferRoutes.deleteOffer);
 	
 	app.post('/category/:categoryId/product/:productId/offer/:offerId/comment', OfferRoutes.addOfferComment);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/comment', OfferRoutes.getOfferComment);

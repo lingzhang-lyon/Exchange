@@ -69,9 +69,13 @@ exports.getOfferDetail = function(req, res){
 								"lastModified": offer.lastModified
 								},
 							function(err,foundHistory){
-									
+				var foundLastEvent=null;
+				
 				if(foundHistory===null){
 					console.log("no update history found for this offer");
+				}
+				else{
+					foundLastEvent =foundHistory.modified;
 				}
 				//find all the comments of this offer
 				Comment.find({"offerId": offerId}, function(err,foundComments){
@@ -87,7 +91,7 @@ exports.getOfferDetail = function(req, res){
 						buyerId : offer.buyerId,
 						lastModified : offer.lastModified,
 						//add last Event here
-						lastEvent : foundHistory.modified,
+						lastEvent : foundLastEvent,
 						// add comments here
 						comments : foundComments
 					});
@@ -171,6 +175,42 @@ exports.updateOffer = function(req, res){
 		
 		}
 		
+	});
+	
+	
+};
+
+//DELETE
+//'/category/:categoryId/product/:productId/offer/:offerId'
+exports.deleteOffer = function(req, res){
+	var offerId = req.param('offerId');
+	Offer.remove({ "offerId": offerId }, function(err) {
+	    if (!err) {
+	    	var removeOffer=true;
+	    	var removeHistory=true;
+	    	var removeComment=true;
+	    	OfferHistory.remove({ "offerId": offerId }, function(err) {
+	    			if(err){
+	    				removeHistory=false;
+	    			}
+	    			Comment.remove({ "offerId": offerId }, function(err) {
+	    				if(err){
+	    					removeComment=false;
+	    				}
+	    			});
+	    	});
+	    	
+	    	res.status(200)
+	    		.json({
+	    		status:'success',
+		    	removeOffer : removeOffer,
+	    		removeHistory : removeHistory,
+	    		removeComment: removeComment
+	    		});    
+	    }
+	    else {
+	    	res.status(500).json({status:'delete offer failure'});     
+	    }
 	});
 	
 	
