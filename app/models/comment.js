@@ -15,4 +15,7 @@ var commentSchema = mongoose.Schema({
 
 });
 
+commentSchema.index({commentId: 1});
+commentSchema.set('autoIndex', true);
+
 module.exports = mongoose.model('Comment', commentSchema);
