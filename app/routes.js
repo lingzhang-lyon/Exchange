@@ -64,6 +64,7 @@ module.exports = function (app, passport) {
 	app.post('/category/:categoryId/product', ProductRoutes.addProduct);
 	app.get('/category/:categoryId/product/:productId', ProductRoutes.getProductDetail);
 	app.put('/category/:categoryId/product/:productId', ProductRoutes.updateProduct);
+	app.del('/category/:categoryId/product/:productId', ProductRoutes.deleteProduct);
 
 	
 //****************************************************************
