@@ -14,4 +14,4 @@ var productSchema = mongoose.Schema({
 	lastUpdated		  : Date
 });
 
-module.exports = mongoose.model('Product', pruductSchema);
+module.exports = mongoose.model('Product', productSchema);
