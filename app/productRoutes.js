@@ -29,7 +29,6 @@ exports.getAllProduct = function(req, res){
 */
 
 //GET
-//Yuan
 //with category Id
 //'/category/:categoryId/product/'
 exports.getAllProduct = function(req, res){
@@ -38,11 +37,13 @@ exports.getAllProduct = function(req, res){
 	Product.find({'categoryId': categoryId}, function(err, products){
 		if(err) {
 			res.status(500).json({status:'failure'});
-			console.log("Get all product error!" + " category Id: " + categoryId);
-		} else if(products === null) {
+			console.log("Get all products error! Category Id: " + categoryId);
+		} 
+		else if(products === null) {
 			res.send("could not find any product from category Id: " + categoryId);
 			console.log("could not find any product from category Id: " + categoryId);
-		} else {
+		} 
+		else {
 			var productlist = [];
 			
 			products.forEach(function(product) {
@@ -58,7 +59,6 @@ exports.getAllProduct = function(req, res){
 };
 
 //Post
-//Yuan
 //'/category/:categoryId/product/'
 exports.addProduct = function(req, res){
 	var newProduct = new Product();
@@ -100,11 +100,26 @@ exports.addProduct = function(req, res){
 	
 };
 
-
-
 //GET
 //Yuan
 //'/category/:categoryId/product/:productId'
+exports.getProductDetail = function(req, res){
+	var productId = req.param('productId');
+
+	Product.findOne({"productId" : productId}, function(err, product) {
+		if(err) {
+			res.status(500).json({status:'failure'});
+			console.log("Get product error! Product Id: " + productId);
+		} 
+		else if(product === null) {
+			res.send("could not find the product by Product Id: " + productId);
+			console.log("could not find the product by Product Id: " + productId);
+		} 
+		else {
+			res.status(200).json(product);
+		}
+	});
+};
 
 //PUT
 //Yuan

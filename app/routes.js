@@ -61,7 +61,7 @@ module.exports = function (app, passport) {
 	var ProductRoutes = require('../app/productRoutes');
 	app.get('/category/:categoryId/product', ProductRoutes.getAllProduct);
 	app.post('/category/:categoryId/product', ProductRoutes.addProduct);
-	
+	app.get('/category/:categoryId/product/:productId', ProductRoutes.getProductDetail);
 
 //****************************************************************
 // User Management
