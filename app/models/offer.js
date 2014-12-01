@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 // define the schema for our post model
 var offerSchema = mongoose.Schema({
 
-	offerId : Number,
+	offerId : String,
 	buyingQty : Number,
 	offeredDetails : String,
 	buyerStatus : String,

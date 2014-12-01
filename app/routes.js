@@ -3,6 +3,7 @@
 var User = require('../app/models/user');
 var Movie = require('../app/models/movie');
 var Post = require('../app/models/post');
+var Offer= require('../app/models/offer');
 
 GLOBAL.count=0;
 
@@ -22,6 +23,36 @@ module.exports = function (app, passport) {
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/comment', OfferRoutes.getOfferComment);
 	app.post('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.addOfferHistory);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.getOfferHistory);
+
+    
+    //creat a offer
+    app.post('/category/:categoryId/product/:productId/offer',function (req, res) {
+            var newOffer = new Offer();
+            var pid = req.param('productId');
+            var cid = req.param('categoryId');
+            var i = guid();
+            //product.findOne({"local.productId": productId}, function (err, result) {
+               // if(result!= null) {
+                    newOffer.offerId=i;
+                    newOffer.buyingQty=req.param('buyingQty');
+                    newOffer.offeredDetails=req.param('offeredDetails');
+                    newOffer.buyerStatus=req.param('buyerStatus');
+                    newOffer.sellerStatus=req.param('sellerStatus');
+                    newOffer.offerExpiry=req.param('offerExpiry');
+                    newOffer.productId=req.param('productId');
+                    newOffer.buyerId=req.param('buyerId');
+                    newOffer.lastModified=new Date();
+                    newOffer.save();
+                    res.status(201).json({status:"A offer has been created",
+                    uuid: i
+                    });
+               // }
+
+               // else{res.status(500).send("error!!!")}
+                    
+           // });
+     });
+
 	
 
 //****************************************************************
@@ -32,6 +63,42 @@ module.exports = function (app, passport) {
 	app.post('/category/:categoryId/product', ProductRoutes.addProduct);
 	
 
+//****************************************************************
+// User Management
+//****************************************************************  
+    //add new user
+   app.post('/users',function (req, res) {
+        var newUser            = new User();
+       
+        var i = guid();
+        // set the user's local credentials
+        newUser.local.email      = req.param('email');//'email';//
+        newUser.local.firstName  = req.param('firstName');//'firstName';//
+        newUser.local.lastName   = req.param('lastName');//'lastName';//
+        newUser.local.phone      = req.param('phone');//'phone';//
+        newUser.local.uuid = i;
+        newUser.save();
+        res.status(201).json({status:"A user has been created",
+            uuid: i
+         });
+     });
+    //search user by uuid
+    app.get('/user/:userid',function (req, res) {
+        var id = req.param('userid');
+        User.findOne({"local.uuid": id}, function (err, user) {
+            if(err){
+            res.status(500).json({status:'failure'});
+            }
+            else if(user===null){
+            res.send("could not find user with this userId");
+            }
+            else{
+            res.status(200).json({
+                user: user
+            });
+            }
+        });
+    });
 //****************************************************************
 // Member Management
 //****************************************************************
@@ -477,4 +544,28 @@ function isLoggedIn(req, res, next) {
     res.redirect('/');
 }
 
+//uuid gen
+var guid = (function() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+               .toString(16)
+               .substring(1);
+                }
+                return function() {
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+            };
+        })();
+
+
+var guid1 = (function(){ 
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = (d + Math.random()*16)%16 | 0;
+                d = Math.floor(d/16);
+                return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                 });
+                return uuid;
+                };
+        })();
 
