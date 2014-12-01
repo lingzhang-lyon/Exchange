@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 // define the schema for our post model
 var productSchema = mongoose.Schema({
-	productID		  : Number,
+	productId		  : Number,
 	productName		  : String,
 	userId			  : Number,
 	quantity		  : Number,
