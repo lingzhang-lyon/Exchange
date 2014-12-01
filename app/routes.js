@@ -23,6 +23,7 @@ module.exports = function (app, passport) {
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/comment', OfferRoutes.getOfferComment);
 	app.post('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.addOfferHistory);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.getOfferHistory);
+
     
     //creat a offer
     app.post('/category/:categoryId/product/:productId/offer',function (req, res) {
@@ -52,6 +53,10 @@ module.exports = function (app, passport) {
            // });
      });
 
+	
+	app.get('/category/:categoryId/product', OfferRoutes.getAllProduct);
+	app.post('/category/:categoryId/product', OfferRoutes.addProduct);
+	
 
 //****************************************************************
 // User Management
