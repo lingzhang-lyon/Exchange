@@ -23,6 +23,7 @@ var userSchema = mongoose.Schema({
         createDate   : Date,
         firstName    : String,
         lastName     : String,
+        uuid         : String,
         phone        : String,
         zip			 : String,
         address      : String
