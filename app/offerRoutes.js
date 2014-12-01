@@ -1,9 +1,10 @@
 /**
  * New node file
  */
-var Offer= require('../app/models/offer');
-var OfferHistory= require('../app/models/offerHistory');
-var Comment= require('../app/models/comment');
+var Offer		 = require('../app/models/offer');
+var OfferHistory = require('../app/models/offerHistory');
+var Comment		 = require('../app/models/comment');
+var Product 	 = require('../app/models/product');
 
 
 //for test
@@ -44,6 +45,48 @@ exports.testGetAllOffer = function(req, res){
 	});
 	
 };
+
+
+//GET
+//Yuan
+//'/category/:categoryId/product/'
+exports.getAllProduct = function(req, res){
+	Product.find({}, function(err, products){
+		if(err) {
+			res.status(500).json({status:'failure'});
+			console.log("Get all product error!");
+		} else if(products===null) {
+			res.send("could not find any product");
+			console.log("could not find any product");
+		} else {
+			var productlist = [];
+			
+			products.forEach(function(product) {
+				console.log(product);
+				productlist.push(product);
+			});
+			
+			res.status(200).json(productlist);
+		}
+	});
+};
+
+
+//Post
+//Yuan
+//'/category/:categoryId/product/'
+
+//GET
+//Yuan
+//'/category/:categoryId/product/:productId'
+
+//PUT
+//Yuan
+//'/category/:categoryId/product/:productId'
+
+//DELETE
+//Yuan
+//'/category/:categoryId/product/:productId'
 
 
 
