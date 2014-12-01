@@ -23,6 +23,7 @@ module.exports = function (app, passport) {
 	app.post('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.addOfferHistory);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.getOfferHistory);
 	
+	app.get('/category/:categoryId/product', OfferRoutes.getAllProduct);
 
 //****************************************************************
 // Member Management
