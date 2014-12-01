@@ -84,7 +84,7 @@ exports.getAllProduct = function(req, res){
 		if(err) {
 			res.status(500).json({status:'failure'});
 			console.log("Get all product error!" + " category Id: " + categoryId);
-		} else if(products===null) {
+		} else if(products === null) {
 			res.send("could not find any product from category Id: " + categoryId);
 			console.log("could not find any product from category Id: " + categoryId);
 		} else {
@@ -103,6 +103,46 @@ exports.getAllProduct = function(req, res){
 //Post
 //Yuan
 //'/category/:categoryId/product/'
+exports.addProduct = function(req, res){
+	var newProduct = new Product();
+	Product.count({ productId:{$exists: true} },
+			function (err, count){
+				newProduct.productId 		 = count + 1;
+				newProduct.productName 		 = req.param('productName');
+				newProduct.quantity 		 = req.param('quantity');
+				newProduct.userId 			 = req.param('userId');
+				newProduct.expectedOffer 	 = req.param('productName');
+				newProduct.productExpiryDate = req.param('productExpiryDate');
+				newProduct.isValid 			 = req.param('isValid');
+				newProduct.categoryId 		 = req.param('categoryId');
+				newProduct.lastUpdated 		 = req.param('lastUpdated');
+				
+				newProduct.save(function(err){
+					if(err){
+						res.status(500).json({status:'failure'});
+						console.log("failure to save new product");
+					}
+					else{
+						res.status(200).json({
+							productId 			: newProduct.productId,
+							productName 		: newProduct.productName,
+							quantity 			: newProduct.quantity,
+							userId 				: newProduct.userId,
+							expectedOffer 		: newProduct.expectedOffer,
+							productDesc 		: newProduct.productDesc,
+							productExpiryDate 	: newProduct.productExpiryDate,
+							isValid 			: newProduct.isValid,
+							categoryId 			: newProduct.categoryId,
+							lastUpdated 		: newProduct.lastUpdated
+						});
+					}
+			});
+		
+	});
+	
+};
+
+
 
 //GET
 //Yuan

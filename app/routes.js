@@ -24,6 +24,8 @@ module.exports = function (app, passport) {
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.getOfferHistory);
 	
 	app.get('/category/:categoryId/product', OfferRoutes.getAllProduct);
+	app.post('/category/:categoryId/product', OfferRoutes.addProduct);
+	
 
 //****************************************************************
 // Member Management
