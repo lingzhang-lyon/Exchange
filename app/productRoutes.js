@@ -1,7 +1,7 @@
 /**
  * New node file
  */
-var Product 	 = require('../app/models/product');
+var Product = require('../app/models/product');
 
 //GET
 //'/category/:categoryId/product/'
@@ -50,7 +50,9 @@ exports.getAllProduct = function(req, res){
 				productlist.push(product);
 			});
 			
-			res.status(200).json(productlist);
+			res.status(200).json( {
+				products : productlist
+			});
 		}
 	});
 };

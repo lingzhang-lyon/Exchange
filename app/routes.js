@@ -23,8 +23,13 @@ module.exports = function (app, passport) {
 	app.post('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.addOfferHistory);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.getOfferHistory);
 	
-	app.get('/category/:categoryId/product', OfferRoutes.getAllProduct);
-	app.post('/category/:categoryId/product', OfferRoutes.addProduct);
+
+//****************************************************************
+// Product Management
+//****************************************************************
+	var ProductRoutes = require('../app/productRoutes');
+	app.get('/category/:categoryId/product', ProductRoutes.getAllProduct);
+	app.post('/category/:categoryId/product', ProductRoutes.addProduct);
 	
 
 //****************************************************************
