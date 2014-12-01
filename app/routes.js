@@ -12,6 +12,7 @@ module.exports = function (app, passport) {
 // Offer Management
 //****************************************************************	
 	var OfferRoutes = require('../app/offerRoutes');
+	
 	app.get('/category/:categoryId/product/:productId/offer/testSaveOffer', OfferRoutes.testSaveOffer);
  	app.get('/category/:categoryId/product/:productId/offer/testGetAllOffer',  OfferRoutes.testGetAllOffer);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId', OfferRoutes.getOfferDetail);
@@ -22,7 +23,14 @@ module.exports = function (app, passport) {
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/comment', OfferRoutes.getOfferComment);
 	app.post('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.addOfferHistory);
 	app.get('/category/:categoryId/product/:productId/offer/:offerId/history', OfferRoutes.getOfferHistory);
-	
+
+//****************************************************************
+// Category 
+//****************************************************************	
+	var CategoryRoutes = require('../app/categoryRoutes');
+	app.get('/category', CategoryRoutes.showAll);
+	app.post('/category', CategoryRoutes.add);
+	app.get('/category/:categoryId', CategoryRoutes.showOne);
 
 //****************************************************************
 // Member Management
