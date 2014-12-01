@@ -65,6 +65,15 @@ module.exports = function (app, passport) {
 	app.get('/category/:categoryId/product/:productId', ProductRoutes.getProductDetail);
 	app.put('/category/:categoryId/product/:productId', ProductRoutes.updateProduct);
 
+	
+//****************************************************************
+// Category Management
+//****************************************************************
+		var Category = require('../app/categoryRoutes');
+		app.get('/category', Category.showAll);
+		app.get('/category/:categoryId', Category.showOne);
+		app.post('/category', Category.add);
+
 //****************************************************************
 // User Management
 //****************************************************************  

@@ -7,7 +7,7 @@ var category = require('../app/models/category');
 // "/category/:categoryId" Return the specific category.
 exports.showOne = function(req,res){
 	var cat_id = req.param('categoryId');
-	category.find({"catId": cat_id}, function(err,result){
+	category.find({"categoryId": cat_id}, function(err,result){
 		if(err){
 			res.status(500).json({status:'failure'});
 		}
@@ -45,10 +45,10 @@ exports.showAll = function(req,res){
 exports.add = function(req,res){
 	var newCat = new category();
 	var cat_name = req.body.categoryName;
-	category.count({catId:{$exists: true}},
+	category.count({categoryId:{$exists: true}},
 	     function (err, count){
-		 newCat.catId = count +1;
-		 newCat.catValue = cat_name;
+		 newCat.categoryId = count +1;
+		 newCat.categoryName = cat_name;
 		 newCat.save(function(err){
 			 if(err){
 					res.status(500).json({status:'failure'});
@@ -56,8 +56,8 @@ exports.add = function(req,res){
 				}
 				else{
 					res.status(200).json({
-						categoryId : newCat.catId,
-						categoryName: newCat.catValue
+						categoryId : newCat.categoryId,
+						categoryName: newCat.categoryName
 					});
 				}
 		});
