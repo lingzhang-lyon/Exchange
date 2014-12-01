@@ -69,6 +69,7 @@ exports.addProduct = function(req, res){
 				newProduct.quantity 		 = req.param('quantity');
 				newProduct.userId 			 = req.param('userId');
 				newProduct.expectedOffer 	 = req.param('expectedOffer');
+				newProduct.productDesc	 	 = req.param('productDesc');
 				newProduct.productExpiryDate = req.param('productExpiryDate');
 				newProduct.isValid 			 = req.param('isValid');
 				newProduct.categoryId 		 = req.param('categoryId');
