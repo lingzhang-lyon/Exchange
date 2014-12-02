@@ -329,7 +329,7 @@ exports.getOfferHistory = function(req, res){
 exports.addOffer = function(req, res){
 	  var offer = new Offer();
       var productId = req.param('productId');
-      offer.count({offerId:{$exists: true}},
+      Offer.count({offerId:{$exists: true}},
     		function (err, count){
             
 			offer.offerId=count + 1;
