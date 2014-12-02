@@ -130,16 +130,16 @@ exports.updateProduct = function(req, res){
 				}
 				else{
 					res.status(200).json({
-						productId 			: newProduct.productId,
-						productName 		: newProduct.productName,
-						quantity 			: newProduct.quantity,
-						userId 				: newProduct.userId,
-						expectedOffer 		: newProduct.expectedOffer,
-						productDesc 		: newProduct.productDesc,
-						productExpiryDate 	: newProduct.productExpiryDate,
-						isValid 			: newProduct.isValid,
-						categoryId 			: newProduct.categoryId,
-						lastUpdated 		: newProduct.lastUpdated
+						productId 			: product.productId,
+						productName 		: product.productName,
+						quantity 			: product.quantity,
+						userId 				: product.userId,
+						expectedOffer 		: product.expectedOffer,
+						productDesc 		: product.productDesc,
+						productExpiryDate 	: product.productExpiryDate,
+						isValid 			: product.isValid,
+						categoryId 			: product.categoryId,
+						lastUpdated 		: product.lastUpdated
 					});
 				}
 			});
