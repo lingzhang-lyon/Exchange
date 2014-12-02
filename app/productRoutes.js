@@ -36,6 +36,7 @@ exports.getAllProduct = function(req, res) {
 //'/category/:categoryId/product/'
 exports.addProduct = function(req, res) {
 	var newProduct = new Product();
+	
 	Product.count({ productId:{$exists: true}},
 			function (err, count) {
 				newProduct.productId 		 = count + 1;
@@ -76,7 +77,6 @@ exports.addProduct = function(req, res) {
 };
 
 //GET
-//Yuan
 //'/category/:categoryId/product/:productId'
 exports.getProductDetail = function(req, res) {
 	var productId = req.param('productId');
