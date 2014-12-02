@@ -1,0 +1,54 @@
+Deploy mongo sharding 
+4 nodes cluster
+
+1) config server
+on machine1: suppose ip 192.168.0.2
+start a config server
+$ mongod --configsvr --dbpath /Users/lingzhang/Documents/mongoDBdata/configdb --port 27019
+
+on machine2: suppose ip 192.168.0.3
+start a config server
+$ mongod --configsvr --dbpath /Users/lingzhang/Documents/mongoDBdata/configdb --port 27019
+
+on machine3: 192.168.0.4
+start a config server
+$ mongod --configsvr --dbpath /Users/lingzhang/Documents/mongoDBdata/configdb --port 27019
+
+2) mongos for each application server 
+on machine 1：
+start mongos instances
+$ mongos --configdb 192.168.0.2:27019, 192.168.0.3:27019, 192.168.0.4:27019
+then start our node.js application, connect to  mongodb://localhost:27017
+
+on machine 4 ：suppose ip 192.168.0.5
+start mongos instances
+$ mongos --configdb 192.168.0.2:27019, 192.168.0.3:27019, 192.168.0.4:27019
+then start our node.js application, connect to  mongodb://localhost:27017
+
+3) start and add shards to cluster
+on machine 1:
+start a mongodb instance for shard
+$ mongod  --dbpath /Users/lingzhang/Documents/mongoDBdata/db2 --port 27015
+
+on machine 2:
+start a mongodb instance for shard
+$ mongod  --dbpath /Users/lingzhang/Documents/mongoDBdata/db2 --port 27015
+
+on machine 3:
+start a mongodb instance for shard
+$ mongod  --dbpath /Users/lingzhang/Documents/mongoDBdata/db2 --port 27015
+
+on machine 4: (any machine would be ok)
+//connect to mongos
+$ mongo -- host 192.168.0.5 --port 27017
+
+//in mongos, add shards to cluster
+mongos>  sh.addShard("192.168.0.2:27015")
+mongos>  sh.addShard("192.168.0.3:27015")
+mongos>  sh.addShard("192.168.0.4:27015")
+mongos>  sh.status()
+
+5) then we got a cluster has:
+two mongos(application server)(machine1 and 4) ,
+three config server (machine1, 2, 3)
+three shard (machine1, 2, 3)
