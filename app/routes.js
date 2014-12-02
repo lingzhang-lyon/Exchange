@@ -51,7 +51,12 @@ module.exports = function (app, passport) {
            // });
      });
 
-	
+  //****************************************************************
+ // user Management
+ //****************************************************************
+ 	var UserRoutes = require('../app/userRoutes');
+ 	app.post('/users', UserRoutes.addUser);
+    
 
 //****************************************************************
 // Product Management
@@ -81,10 +86,10 @@ module.exports = function (app, passport) {
        
         var i = guid();
         // set the user's local credentials
-        newUser.local.email      = req.param('email');//'email';//
+        newUser.local.email      = req.param('emailId');//'email';//
         newUser.local.firstName  = req.param('firstName');//'firstName';//
         newUser.local.lastName   = req.param('lastName');//'lastName';//
-        newUser.local.phone      = req.param('phone');//'phone';//
+        newUser.local.phone      = req.param('mobile');//'phone';//
         newUser.local.uuid = i;
         newUser.save();
         res.status(201).json({status:"A user has been created",
