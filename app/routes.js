@@ -62,6 +62,7 @@ module.exports = function (app, passport) {
 	app.get('/category/:categoryId/product', ProductRoutes.getAllProduct);
 	app.post('/category/:categoryId/product', ProductRoutes.addProduct);
 	app.get('/category/:categoryId/product/:productId', ProductRoutes.getProductDetail);
+	app.put('/category/:categoryId/product/:productId', ProductRoutes.updateProduct);
 
 //****************************************************************
 // User Management
