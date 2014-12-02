@@ -53,7 +53,7 @@ exports.addProduct = function(req, res){
 					if(err){
 						res.status(500).json({status:'failure'});
 						console.log(err);
-						console.log("failure to save new product");
+						console.log("failure to add new product");
 					}
 					else{
 						res.status(200).json({
@@ -105,7 +105,7 @@ exports.updateProduct = function(req, res){
 	Product.findOne({"productId" : productId}, function(err, product) {
 		if(err) {
 			res.status(500).json({status:'failure'});
-			console.log("Get product error! Product Id: " + productId);
+			console.log("Update product error! Product Id: " + productId);
 		} 
 		else if(product === null) {
 			res.send("could not find the product by Product Id: " + productId);
@@ -113,15 +113,15 @@ exports.updateProduct = function(req, res){
 		} 
 		else {
 			// update product info
-			product.productName 	 = req.param('productName');
-			product.quantity 		 = req.param('quantity');
-			product.userId 			 = req.param('userId');
-			product.expectedOffer 	 = req.param('expectedOffer');
-			product.productDesc	 	 = req.param('productDesc');
+			product.productName 	  = req.param('productName');
+			product.quantity 		  = req.param('quantity');
+			product.userId 			  = req.param('userId');
+			product.expectedOffer 	  = req.param('expectedOffer');
+			product.productDesc	 	  = req.param('productDesc');
 			product.productExpiryDate = req.param('productExpiryDate');
-			product.isValid 		 = req.param('isValid');
-			product.categoryId 		 = req.param('categoryId');
-			product.lastUpdated 	 = req.param('lastUpdated');
+			product.isValid 		  = req.param('isValid');
+			product.categoryId 		  = req.param('categoryId');
+			product.lastUpdated 	  = req.param('lastUpdated');
 			
 			product.save(function(err) {
 				if(err){
@@ -148,7 +148,23 @@ exports.updateProduct = function(req, res){
 };
 
 //DELETE
-//Yuan
 //'/category/:categoryId/product/:productId'
+exports.deleteProduct = function(req, res){
+	var productId = req.param('productId');
+	
+	Product.remove({"productId": productId}, function(err) {
+		if(err) {
+			res.status(500).json({status:'failure'});
+			console.log("Delete product error! Product Id: " + productId);
+		} 
+		else {
+			res.status(200).json({
+				status:'SUCCESS'
+    		});  
+			
+			console.log("Delete product by Product Id: " + productId);
+		}
+	});
+};
 
 
