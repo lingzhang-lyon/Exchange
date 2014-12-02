@@ -12,7 +12,7 @@ exports.addUser = function(req, res) {
 			newUser.userId 		= count + 1;
 			newUser.firstName	= req.param('firstName');
 			newUser.lastName	= req.param('lastName');
-			newUser.emaiId		= req.param('emaiId');
+			newUser.emailId		= req.param('emailId');
 			newUser.mobile		= req.param('mobile');
 			
 			newUser.save(function(err) {
@@ -26,7 +26,7 @@ exports.addUser = function(req, res) {
 						userId 		: newUser.userId,
 						firstName 	: newUser.firstName,
 						lastName 	: newUser.lastName,
-						emaiId 		: newUser.emaiId,
+						emailId 	: newUser.emailId,
 						mobile 		: newUser.mobile
 					});
 				}
