@@ -323,14 +323,16 @@ exports.getOfferHistory = function(req, res){
 
 };
 
-/*//Create a offer
+//Create a offer
 //Post
 ///category/:categoryId/product/:productId/offer
 exports.addOffer = function(req, res){
 	  var offer = new Offer();
       var productId = req.param('productId');
+      offer.count({offerId:{$exists: true}},
+    		function (err, count){
             
-			offer.offerId=req.param('offerId');
+			offer.offerId=count + 1;
 			offer.buyingQty=req.param('buyingQty');
 			offer.offeredDetails=req.param('offeredDetails');
 			offer.buyerStatus=req.param('buyerStatus');
@@ -361,6 +363,29 @@ exports.addOffer = function(req, res){
 					
 				
 				});
- };		*/
+      });
+ };		
 
-
+//list all offer
+//'/category/:categoryId/product/:productId/offer'
+exports.listOffers = function (req, res) {
+	 var productId = req.param('productId');
+	 Offer.find({'productId': productId}, function(err, offers){
+			if(err) {
+				res.status(500).json({status:'failure'});
+				console.log("Get all offers error!" + " productId: " + productId);
+			} else if(offers === null) {
+				res.send("could not find any offer from productId: " + productId);
+				//console.log("could not find any product from category Id: " + categoryId);
+			} else {
+				var offerlist = [];
+				
+				offers.forEach(function(offer) {
+					//console.log(product);
+					offerlist.push(offer);
+				});
+				
+				res.status(200).json(offerlist);
+			}
+		});
+}

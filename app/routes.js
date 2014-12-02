@@ -26,8 +26,9 @@ module.exports = function (app, passport) {
     //creat a offer
 	var OfferRoutes = require('../app/offerRoutes');
     app.post('/category/:categoryId/product/:productId/offer',OfferRoutes.addOffer);
-           
-
+    //list all offer for a product
+    app.get('/category/:categoryId/product/:productId/offer', OfferRoutes.listOffers);
+ 
   //****************************************************************
  // user Management
  //****************************************************************
