@@ -33,3 +33,22 @@ exports.addUser = function(req, res) {
 			});
 	});
 };
+
+//get 
+///user/:userId    
+exports.findUser = function(req, res) {
+ var id = req.param('userid');
+ User.findOne({"userId": id}, function (err, user) {
+     if(err){
+     res.status(500).json({status:'failure'});
+     }
+     else if(user===null){
+     res.send("could not find user with this userId");
+     }
+     else{
+     res.status(200).json({
+         user: user
+     });
+     }
+ });
+};

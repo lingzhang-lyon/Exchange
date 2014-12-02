@@ -323,3 +323,44 @@ exports.getOfferHistory = function(req, res){
 
 };
 
+/*//Create a offer
+//Post
+///category/:categoryId/product/:productId/offer
+exports.addOffer = function(req, res){
+	  var offer = new Offer();
+      var productId = req.param('productId');
+            
+			offer.offerId=req.param('offerId');
+			offer.buyingQty=req.param('buyingQty');
+			offer.offeredDetails=req.param('offeredDetails');
+			offer.buyerStatus=req.param('buyerStatus');
+			offer.sellerStatus=req.param('sellerStatus');
+			offer.offerExpiry=req.param('offerExpiry');
+			offer.productId=req.param('productId');
+			offer.buyerId=req.param('buyerId');
+			offer.lastModified=new Date();
+			offer.save(function(err){
+				if(err){
+					res.status(500).json({status:'failure'});
+					console.log("failure to update found offer");
+				}
+				else{
+					res.status(200).json({
+						offerId : offer.offerId,
+						buyingQty : offer.buyingQty,
+						offeredDetails : offer.offeredDetails,
+						buyerStatus : offer.buyerStatus,
+						sellerStatus : offer.sellerStatus,
+						offerExpiry : offer.offerExpiry,
+						productId : offer.productId,
+						buyerId : offer.buyerId,
+						lastModified : offer.lastModified
+					});
+								
+							}
+					
+				
+				});
+ };		*/
+
+

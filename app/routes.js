@@ -24,39 +24,16 @@ module.exports = function (app, passport) {
 
     
     //creat a offer
-    app.post('/category/:categoryId/product/:productId/offer',function (req, res) {
-            var newOffer = new Offer();
-            var pid = req.param('productId');
-            var cid = req.param('categoryId');
-            var i = guid();
-            //product.findOne({"local.productId": productId}, function (err, result) {
-               // if(result!= null) {
-                    newOffer.offerId=i;
-                    newOffer.buyingQty=req.param('buyingQty');
-                    newOffer.offeredDetails=req.param('offeredDetails');
-                    newOffer.buyerStatus=req.param('buyerStatus');
-                    newOffer.sellerStatus=req.param('sellerStatus');
-                    newOffer.offerExpiry=req.param('offerExpiry');
-                    newOffer.productId=req.param('productId');
-                    newOffer.buyerId=req.param('buyerId');
-                    newOffer.lastModified=new Date();
-                    newOffer.save();
-                    res.status(201).json({status:"A offer has been created",
-                    uuid: i
-                    });
-               // }
-
-               // else{res.status(500).send("error!!!")}
-                    
-           // });
-     });
+	var OfferRoutes = require('../app/offerRoutes');
+    app.post('/category/:categoryId/product/:productId/offer',OfferRoutes.addOffer);
+           
 
   //****************************************************************
  // user Management
  //****************************************************************
  	var UserRoutes = require('../app/userRoutes');
  	app.post('/users', UserRoutes.addUser);
-    
+    app.get('/user/:userid',UserRoutes.findUser);
 
 //****************************************************************
 // Product Management
