@@ -330,7 +330,7 @@ exports.getOfferHistory = function(req, res){
 exports.addOffer = function(req, res){
 	  var offer = new Offer();
       var productId = req.param('productId');
-      Offer.find({"productId": productId},
+      Offer.findOne({"productId": productId},
     		function (err, result){
     		console.log(result);
             if(result===null){
