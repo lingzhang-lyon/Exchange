@@ -4,6 +4,7 @@
 var Offer		 = require('../app/models/offer');
 var OfferHistory = require('../app/models/offerHistory');
 var Comment		 = require('../app/models/comment');
+var fun =  require('../app/funcations');
 
 
 //for test
@@ -329,10 +330,14 @@ exports.getOfferHistory = function(req, res){
 exports.addOffer = function(req, res){
 	  var offer = new Offer();
       var productId = req.param('productId');
-      Offer.count({offerId:{$exists: true}},
-    		function (err, count){
-            
-			offer.offerId=count + 1;
+      Offer.find({"productId": productId},
+    		function (err, result){
+    		console.log(result);
+            if(result===null){
+			res.send("could not find product for this offer");
+			}
+			else{
+			offer.offerId=fun.guid();
 			offer.buyingQty=req.param('buyingQty');
 			offer.offeredDetails=req.param('offeredDetails');
 			offer.buyerStatus=req.param('buyerStatus');
@@ -341,6 +346,7 @@ exports.addOffer = function(req, res){
 			offer.productId=req.param('productId');
 			offer.buyerId=req.param('buyerId');
 			offer.lastModified=new Date();
+			}
 			offer.save(function(err){
 				if(err){
 					res.status(500).json({status:'failure'});
@@ -371,10 +377,12 @@ exports.addOffer = function(req, res){
 exports.listOffers = function (req, res) {
 	 var productId = req.param('productId');
 	 Offer.find({'productId': productId}, function(err, offers){
+	 	console.log(offers.length);
 			if(err) {
 				res.status(500).json({status:'failure'});
 				console.log("Get all offers error!" + " productId: " + productId);
-			} else if(offers === null) {
+			} else if(offers.length===0) {
+
 				res.send("could not find any offer from productId: " + productId);
 				//console.log("could not find any product from category Id: " + categoryId);
 			} else {
