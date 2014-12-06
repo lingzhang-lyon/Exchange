@@ -2,19 +2,20 @@
  * New node file
  */
 var User = require('../app/models/user');
-
+var fun =  require('../app/funcations');
 //Post
 //'/users'
 exports.addUser = function(req, res) {
 	var newUser = new User();
-	User.count({userId:{$exists: true}},
+	User.count({emailId:{$exists: true}},
 		function (err, count) {
-			newUser.userId 		= count + 1;
+			console.log(count);
+			if(count===0){
+			newUser.userId 		= fun.guid();
 			newUser.firstName	= req.param('firstName');
 			newUser.lastName	= req.param('lastName');
 			newUser.emailId		= req.param('emailId');
 			newUser.mobile		= req.param('mobile');
-			
 			newUser.save(function(err) {
 				if(err) {
 					res.status(500).json({status:'failure'});
@@ -31,6 +32,8 @@ exports.addUser = function(req, res) {
 					});
 				}
 			});
+		}
+		else{res.send('emailId already taken!!!');}
 	});
 };
 
@@ -52,3 +55,4 @@ exports.findUser = function(req, res) {
      }
  });
 };
+

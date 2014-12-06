@@ -381,11 +381,10 @@ exports.listOffers = function (req, res) {
 				var offerlist = [];
 				
 				offers.forEach(function(offer) {
-					//console.log(product);
 					offerlist.push(offer);
 				});
 				
-				res.status(200).json(offerlist);
+				res.status(200).json({offers:offerlist});
 			}
 		});
 }
