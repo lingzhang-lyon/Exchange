@@ -7,10 +7,11 @@ var fun =  require('../app/funcations');
 //'/users'
 exports.addUser = function(req, res) {
 	var newUser = new User();
-	User.count({emailId:{$exists: true}},
-		function (err, count) {
-			console.log(count);
-			if(count===0){
+	var emailId = req.param('emailId');
+	User.findOne({'emailId':emailId},
+		function (err, result) {
+			console.log(result);
+			if(result===null){
 			newUser.userId 		= fun.guid();
 			newUser.firstName	= req.param('firstName');
 			newUser.lastName	= req.param('lastName');
