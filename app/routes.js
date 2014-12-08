@@ -34,7 +34,7 @@ module.exports = function (app, passport) {
  //****************************************************************
  	var UserRoutes = require('../app/userRoutes');
  	app.post('/users', UserRoutes.addUser);
-    app.get('/user/:userid',UserRoutes.findUser);
+    	app.get('/users/:userid',UserRoutes.findUser);
 
 //****************************************************************
 // Product Management
