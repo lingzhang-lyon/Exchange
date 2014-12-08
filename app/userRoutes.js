@@ -8,9 +8,11 @@ var fun =  require('../app/funcations');
 exports.addUser = function(req, res) {
 	var newUser = new User();
 	var emailId = req.param('emailId');
+	console.log(fun.testEmail(emailId));
 	User.findOne({'emailId':emailId},
 		function (err, result) {
 			console.log(result);
+		  if(fun.testEmail(emailId)){
 			if(result===null){
 			newUser.userId 		= fun.guid();
 			newUser.firstName	= req.param('firstName');
@@ -22,7 +24,7 @@ exports.addUser = function(req, res) {
 					res.status(500).json({status:'failure'});
 					console.log(err);
 					console.log("failure to add new user");
-				}
+					}
 				else {
 					res.status(200).json({
 						userId 		: newUser.userId,
@@ -30,11 +32,13 @@ exports.addUser = function(req, res) {
 						lastName 	: newUser.lastName,
 						emailId 	: newUser.emailId,
 						mobile 		: newUser.mobile
-					});
-				}
-			});
-		}
-		else{res.send('emailId already taken!!!');}
+						});
+					}
+				});
+			}
+			else{res.send('emailId already taken!!!');}
+		  }
+		  else{res.send('emailId is valid :(');}
 	});
 };
 
