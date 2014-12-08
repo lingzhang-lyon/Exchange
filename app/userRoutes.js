@@ -14,12 +14,12 @@ exports.addUser = function(req, res) {
 			console.log(result);
 		  if(fun.testEmail(emailId)){
 			if(result===null){
-			newUser.userId 		= fun.guid();
-			newUser.firstName	= req.param('firstName');
-			newUser.lastName	= req.param('lastName');
-			newUser.emailId		= req.param('emailId');
-			newUser.mobile		= req.param('mobile');
-			newUser.save(function(err) {
+				newUser.userId 		= fun.guid();
+				newUser.firstName	= req.param('firstName');
+				newUser.lastName	= req.param('lastName');
+				newUser.emailId		= req.param('emailId');
+				newUser.mobile		= req.param('mobile');
+				newUser.save(function(err) {
 				if(err) {
 					res.status(500).json({status:'failure'});
 					console.log(err);
@@ -55,7 +55,11 @@ exports.findUser = function(req, res) {
      }
      else{
      res.status(200).json({
-         user: user
+         userId 	: user.userId,
+		 firstName 	: user.firstName,
+		 lastName 	: user.lastName,
+		 emailId 	: user.emailId,
+		 mobile 	: user.mobile
      });
      }
  });
