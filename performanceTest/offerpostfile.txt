@@ -1,0 +1,1 @@
+buyingQty=10&offeredDetails="10 pears"&buyerId=1
