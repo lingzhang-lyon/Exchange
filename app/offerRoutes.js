@@ -5,13 +5,15 @@ var Offer		 = require('../app/models/offer');
 var OfferHistory = require('../app/models/offerHistory');
 var Comment		 = require('../app/models/comment');
 var fun =  require('../app/funcations');
+var Product =  require('../app/models/product');
 
 
 //for test
 exports.testSaveOffer = function(req, res){
 		
 	var newOffer=new Offer();
-	newOffer.offerId="1";
+	//newOffer.offerId="1";
+	newOffer.offerId=fun.guid();
 	newOffer.buyingQty=100;
 	
 	newOffer.save(function(err){
@@ -21,7 +23,8 @@ exports.testSaveOffer = function(req, res){
 		}
 		else{
 			res.send('saveResult', {
-				status: "success"
+				status: "success",
+				offerId: newOffer.offerId
 			});
 		}
 	});
@@ -69,11 +72,14 @@ exports.getOfferDetail = function(req, res){
 							function(err,foundHistory){
 				var foundLastEvent=null;
 				
-				if(foundHistory===null){
+				//if(foundHistory===null){
+				if(foundHistory===null||foundHistory ===undefined){
 					console.log("no update history found for this offer");
 				}
 				else{
 					foundLastEvent =foundHistory.modified;
+					//foundLastEvent="lastEvent";
+					
 				}
 				//find all the comments of this offer
 				Comment.find({"offerId": offerId}, function(err,foundComments){
@@ -330,10 +336,10 @@ exports.getOfferHistory = function(req, res){
 exports.addOffer = function(req, res){
 	  var offer = new Offer();
       var productId = req.param('productId');
-      Offer.findOne({"productId": productId},
+      Product.findOne({"productId": productId},
     		function (err, result){
     		console.log(result);
-            if(result===null){
+            if(result===null||result===undefined){
 			res.send("could not find product for this offer");
 			}
 			else{
@@ -370,7 +376,9 @@ exports.addOffer = function(req, res){
 				
 				});
       });
- };		
+ };	
+ 
+ 
 
 //list all offer
 //'/category/:categoryId/product/:productId/offer'

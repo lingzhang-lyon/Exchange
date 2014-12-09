@@ -10,7 +10,7 @@ var offerHistorySchema = mongoose.Schema({
 	offerHistoryId : Number,
 	modified : String,
 	lastModified : Date,
-	offerId : Number
+	offerId : String
 
 });
 

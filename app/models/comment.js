@@ -10,7 +10,7 @@ var commentSchema = mongoose.Schema({
 	commentId : Number,
 	commentDesc : String,
 	lastUpdated : Date,
-	offerId : Number,
+	offerId : String,
 	userId : Number
 
 });
