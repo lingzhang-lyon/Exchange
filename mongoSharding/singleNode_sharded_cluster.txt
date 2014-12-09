@@ -1,0 +1,14 @@
+single node sharded cluster:  
+start a config server
+$ mongod --configsvr --dbpath /Users/lingzhang/Documents/mongoDBdata/configdbsingle --port 27019
+start mongos instances
+$ mongos --configdb 127.0.0.1:27019 --port 27017
+
+start a mongodb instances for shard
+$ mongod  --dbpath /Users/lingzhang/Documents/mongoDBdata/shard0 --port 27015
+$ mongod  --dbpath /Users/lingzhang/Documents/mongoDBdata/shard1 --port 27013
+
+//connect to mongos
+$ mongo --host 127.0.0.1 --port 27017
+mongos>  sh.addShard("127.0.0.1:27015")
+mongos>  sh.addShard("127.0.0.1:27013")
