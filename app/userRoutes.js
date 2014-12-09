@@ -36,9 +36,10 @@ exports.addUser = function(req, res) {
 					}
 				});
 			}
-			else{res.send('emailId already taken!!!');}
+			else{res.status(202).json({message:'emailId already taken!!!'});}
+			
 		  }
-		  else{res.send('emailId is valid :(');}
+		  else{res.status(202).json({message:'emailId is valid :('});}
 	});
 };
 
