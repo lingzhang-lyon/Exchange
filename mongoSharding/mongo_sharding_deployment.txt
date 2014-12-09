@@ -52,3 +52,12 @@ mongos>  sh.status()
 two mongos(application server)(machine1 and 4) ,
 three config server (machine1, 2, 3)
 three shard (machine1, 2, 3)
+
+6)then we can shard collection in the database
+//if the collection already exists and contains data already.
+mongos> db.users.ensureIndex({_id: "hashed"})  
+//shard the collection
+mongos> sh.shardCollection("test.users", { "_id": "hashed" } )
+
+7)To check the data distribution
+mongos> db.users.getShardDistribution()
